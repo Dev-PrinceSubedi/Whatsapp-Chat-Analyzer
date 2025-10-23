@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import guide
 
+st.set_page_config(layout="wide")
+
+
 from helper import most_common_words
 
 st.markdown("""
@@ -15,7 +18,6 @@ st.markdown("""
         [data-testid="stSidebar"] > div:first-child {
             display: flex;
             flex-direction: column;
-
             height: 100vh;  /* Full sidebar height */
         }
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2 {
@@ -32,6 +34,8 @@ st.sidebar.markdown(
 uploaded_file = st.sidebar.file_uploader(
     "📂 Choose a WhatsApp chat file",
     type=["txt"],
+    accept_multiple_files=False,
+    help="Upload your exported WhatsApp chat (.txt file)",
     label_visibility="visible"
 )
 
@@ -79,8 +83,7 @@ if uploaded_file is not None:
 
     # Display analysis only if button has been clicked
     if st.session_state.analyzed_user is not None:
-
-        # Use the analyzed_user from session state, not the current selection
+        # CRITICAL: Use the analyzed_user from session state for ALL analysis
         display_user = st.session_state.analyzed_user
 
         # Stats Area
@@ -143,7 +146,7 @@ if uploaded_file is not None:
         st.markdown("---")
         st.title(" Message Timeline")
 
-        # Monthly Timeline
+        # Monthly Timeline - USE display_user
         timeline = helper.monthly_timeline(display_user, df)
 
         fig, ax = plt.subplots(figsize=(12, 6))
@@ -223,7 +226,8 @@ if uploaded_file is not None:
         # word cloud
         st.markdown("---")
         st.title("Word Cloud")
-        df_wc = helper.create_wordcloud(display_user, df)
+        # Cache the wordcloud to prevent regeneration on sidebar changes
+        df_wc = helper.create_wordcloud(display_user, df.copy())
         if df_wc is not None:
             fig, ax = plt.subplots()
             ax.imshow(df_wc)
@@ -232,7 +236,7 @@ if uploaded_file is not None:
         else:
             st.write("No words available to generate word cloud!")
 
-        # Most_Common_Words
+        # Most_Common_Words - USE display_user
         st.title("Most Common Words")
         most_common_df = helper.most_common_words(display_user, df)
 
@@ -279,6 +283,7 @@ if uploaded_file is not None:
         st.markdown("---")
         st.title(f" {display_user}'s Most Active Times")
 
+        # Heatmap - USE display_user
         heatmap_data = helper.activity_heatmap_normalized(display_user, df)
 
         fig, ax = plt.subplots(figsize=(12, 6))
