@@ -1,4 +1,4 @@
-💬 WhatsApp Chat Analyzer
+# 💬 WhatsApp Chat Analyzer
 
 WhatsApp Chat Analyzer is an interactive web app built with Python and Streamlit that helps users visualize and understand their WhatsApp conversations like never before.
 By simply uploading an exported chat file, you can explore deep insights into your messaging behavior, discover your most active times, analyze word and emoji usage, and much more — all beautifully visualized.
