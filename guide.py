@@ -13,12 +13,15 @@ def show_guide():
 
     # Simple centered heading (no extra space)
     st.markdown("""
-        <div style='text-align: center; margin-top: -1rem;'>
-            <h1 style='font-weight: bold; margin-bottom: 0;'>
-                <span style='color: #25D366;'>WhatsApp</span> Chat_Analyzer
-            </h1>
-        </div>
-        """, unsafe_allow_html=True)
+           <div style='text-align: center; margin-top: -1rem;'>
+               <h1 style='font-weight: bold; margin-bottom: 0;'>
+                   <span style='color: #25D366;'>WhatsApp</span> Chat_Analyzer
+               </h1>
+               <p style='font-size: 1.5rem; color: #6c757d; '>
+                   _Export your WhatsApp_chat and get_instant insights & analysis_
+               </p>
+           </div>
+           """, unsafe_allow_html=True)
 
     st.divider()
 
